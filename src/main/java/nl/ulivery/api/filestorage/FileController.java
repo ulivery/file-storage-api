@@ -14,6 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -32,7 +34,7 @@ public class FileController {
     @GetMapping("/")
     public String listFiles(Model model) {
         model.addAttribute("files", storageService.loadAll().map(path -> MvcUriComponentsBuilder.fromMethodName(FileController.class, "serveFile",
-                path.getFileName().toString()).build().toUriString()).collect(Collectors.toList()));
+                path.getFileName().toString()).scheme("https").build().toUriString()).collect(Collectors.toList()));
         return "uploadFiles";
     }
 
